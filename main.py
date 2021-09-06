@@ -1,9 +1,11 @@
+# Descargarmos librerias 
+from numpy.lib.function_base import append
 from numpy.testing._private.utils import print_assert_equal
 import pandas as pd
 import numpy as np
 from pandas.core.frame import DataFrame
 import yfinance as yf
-from datetime import datetime
+from datetime import date, datetime
 from os import path
 import os 
 import xlrd
@@ -11,7 +13,7 @@ import sys
 import glob
 import pandas_datareader.data as web
 import matplotlib.pyplot as plt
-
+from datetime import timedelta
 
 cedir = os.path.dirname(os.path.abspath(sys.argv[0]))
 print(cedir)
@@ -25,16 +27,31 @@ rf = 0.0429
 fechas = []
 
 for files in glob.glob(cedir + '/brunopimentel/Documents/GitHub/MyST/files/*.csv'):
-    fechas.append(files[-12:-8] + '/' + files[-8:-6] + '/' + files[-6:-4])
+    fechas.append(files[-12:-8] + files[-8:-6] + files[-6:-4])
+
+print(fechas)
 
 fcd = pd.DataFrame()
 
 fcd['Date'] = fechas 
-fcd['Date'] = pd.to_datetime(fcd['Date'], format='%Y-%m-%d')
 
 dates = list(fcd['Date'])
+print(dates)
+print(len(dates))
 
-fcd = fcd.sort_values(["Date"])
+g = []
+i = 0
+
+while i <= 40:
+    fechas = pd.to_datetime(dates[i], format='%Y/%m/%d')
+    g.append(fechas)
+    i = i + 1
+
+a = DataFrame()
+a['Date'] = g
+a = a.sort_values(['Date'])
+a = a.reset_index()
+print(a['Date'])
 
 # Obtenemos los tickers y los pesos.
 data = pd.read_csv(cedir + '/brunopimentel/Documents/GitHub/MyST/files//NAFTRAC_20180131.csv', skiprows=2)
@@ -52,19 +69,29 @@ ticker2 = list(ticker[0:])
 print(ticker2)
 weight  = data.T.iloc[3]
 
-# Función para descargar precios de cierre ajustados:
-def get_adj_closes(tickers, start_date=None, end_date=None, freq='m'):
-    # Fecha inicio por defecto (start_date='2010-01-01') y fecha fin por defecto (end_date=today)
-    # Descargamos DataFrame con todos los datos
-    closes = yf.download(tickers=list(ticker), start='2019-01-01', end='2019-12-31', progress=False)
-    # Se ordenan los índices de manera ascendente
-    #closes.sort_index(inplace=True)
-    #return closes
+print(len(a['Date']))
 
-#YahooDailyReader
+# Descargamos precios 
+k = 0
+price = []
 
-data_prices = yf.download(tickers=ticker2, start=dates, end='2019-12-31', progress=False)
+while k <= len(a['Date']):
+    start = a['Date'][k]
+    data_prices = yf.download(tickers=ticker2, start=start, end=start + timedelta(days=1), progress=False)
+    price.append(data_prices)
+    k = k+1
 
-data_prices = data_prices.iloc[:, 0:35]
-print(data_prices)
+price = price.iloc[:, 0:35]
+print(price)
 
+datos_fi  = pd.DataFrame()
+datos_fi = price
+
+print(datos_fi)
+
+lista = pd.DataFrame()
+
+lista['tikckers'] = ticker2
+lista['pesos'] = weight/100
+
+print(lista)

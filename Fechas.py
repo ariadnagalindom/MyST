@@ -1,3 +1,4 @@
+# Descargarmos librerias 
 from numpy.lib.function_base import append
 from numpy.testing._private.utils import print_assert_equal
 import pandas as pd
@@ -12,7 +13,7 @@ import sys
 import glob
 import pandas_datareader.data as web
 import matplotlib.pyplot as plt
-
+from datetime import timedelta
 
 cedir = os.path.dirname(os.path.abspath(sys.argv[0]))
 print(cedir)
@@ -28,7 +29,7 @@ fechas = []
 for files in glob.glob(cedir + '/brunopimentel/Documents/GitHub/MyST/files/*.csv'):
     fechas.append(files[-12:-8] + files[-8:-6] + files[-6:-4])
 
-
+print(fechas)
 
 fcd = pd.DataFrame()
 
@@ -36,25 +37,76 @@ fcd['Date'] = fechas
 
 dates = list(fcd['Date'])
 print(dates)
-
-print(dates[0])
+print(len(dates))
 
 g = []
 i = 0
 
-for i in range(len(dates)):
+while i <= 40:
     fechas = pd.to_datetime(dates[i], format='%Y/%m/%d')
     g.append(fechas)
+    i = i + 1
 
-print(g)
+a = DataFrame()
+a['Date'] = g
+a = a.sort_values(['Date'])
+a = a.reset_index()
+print(a['Date'])
+
+# Obtenemos los tickers y los pesos.
+data = pd.read_csv(cedir + '/brunopimentel/Documents/GitHub/MyST/files//NAFTRAC_20180131.csv', skiprows=2)
+
+ticker  = list(data.T.iloc[0])
+ticker = pd.DataFrame(ticker)
+
+ticker = ticker.replace('\*','',regex=True).astype(str)
+ticker = ticker.replace('LIVEPOLC.1', 'LIVEPOLC-1')
+ticker = ticker.replace('MEXCHEM', 'ORBIA')
+ticker = ticker.replace('GFREGIOO', 'RA')
+ticker = ticker[0] + '.MX'
+ticker2 = list(ticker[0:])
+
+print(ticker2)
+weight  = data.T.iloc[3]
+
+print(len(a['Date']))
+
+# Descargamos precios 
+k = 0
+price = []
+
+while k <= len(a['Date']):
+    start = a['Date'][k]
+    data_prices = yf.download(tickers=ticker2, start=start, end=start + timedelta(days=1), progress=False)
+    price.append(data_prices)
+    k = k+1
+
+price = price.iloc[:, 0:35]
+print(price)
+
+datos_fi  = pd.DataFrame()
+datos_fi = price
+
+print(datos_fi)
 
 
-l = pd.DataFrame()
-l['Date'] = g
-v = l.sort_values(['Date'])
-print(v)
 
 
 
 
+
+
+
+
+
+for k in range len(a['Date']):
+    data_prices = yf.download(tickers=ticker2, start=a['Date'][i], end='2019-12-31', progress=False)
+
+
+
+a['Date'][0]
+
+start = a['Date'][0]
+
+data_prices = yf.download(tickers=ticker2, start=start, end=start + timedelta(days=1), progress=False)
 
