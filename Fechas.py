@@ -26,7 +26,7 @@ rf = 0.0429
 # Obtenemos un DataFrame con las fechas y las ordenamos.
 fechas = []
 
-for files in glob.glob(cedir + '/brunopimentel/Documents/GitHub/MyST/files/*.csv'):
+for files in glob.glob(cedir + '/MyST/files/*.csv'):
     fechas.append(files[-12:-8] + files[-8:-6] + files[-6:-4])
 
 print(fechas)
@@ -54,7 +54,7 @@ a = a.reset_index()
 print(a['Date'])
 
 # Obtenemos los tickers y los pesos.
-data = pd.read_csv(cedir + '/brunopimentel/Documents/GitHub/MyST/files//NAFTRAC_20180131.csv', skiprows=2)
+data = pd.read_csv(cedir + '/MyST/files//NAFTRAC_20180131.csv', skiprows=2)
 
 ticker  = list(data.T.iloc[0])
 ticker = pd.DataFrame(ticker)
@@ -72,26 +72,14 @@ weight  = data.T.iloc[3]
 print(len(a['Date']))
 
 # Descargamos precios 
-k = 0
-price = []
-
-while k <= len(a['Date']):
-    start = a['Date'][k]
-    data_prices = yf.download(tickers=ticker2, start=start, end=start + timedelta(days=1), progress=False)
-    price.append(data_prices)
-    k = k+1
-
-price = price.iloc[:, 0:35]
+start = a['Date'][0]
+data_prices = yf.download(tickers=ticker2, start=start, end=a['Date'].iloc[-1], progress=False)
+price = data_prices['Close']
 print(price)
 
-datos_fi  = pd.DataFrame()
-datos_fi = price
-
-print((datos_fi))
+# 
 
 lista = pd.DataFrame()
-
-
 
 capital  = capital - (capital * comision)
 lista['tikckers'] = ticker2
