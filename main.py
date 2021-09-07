@@ -76,3 +76,19 @@ start = a['Date'][0]
 data_prices = yf.download(tickers=ticker2, start=start, end=a['Date'].iloc[-1], progress=False)
 price = data_prices['Close']
 print(price)
+
+# Valuación 
+
+precios_ini = list(price.iloc[0,:])
+print(precios_ini)
+lista = pd.DataFrame()
+
+capital  = capital - (capital * comision)
+lista['tikckers'] = ticker2
+lista['pesos'] = weight/100
+lista['cap_x_ticker'] = capital * lista['pesos']
+lista['Precios_ini'] = precios_ini
+lista['titulos'] = lista['cap_x_ticker'] / lista['Precios_ini']
+
+
+final = pd.DataFrame()
