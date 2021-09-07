@@ -6,7 +6,7 @@ import numpy as np
 from pandas.core.frame import DataFrame
 import yfinance as yf
 from datetime import date, datetime
-from os import path
+from os import cpu_count, path
 import os 
 import xlrd
 import sys 
@@ -26,7 +26,7 @@ rf = 0.0429
 # Obtenemos un DataFrame con las fechas y las ordenamos.
 fechas = []
 
-for files in glob.glob(cedir + '/brunopimentel/Documents/GitHub/MyST/files/*.csv'):
+for files in glob.glob(cedir + '/MyST/files/*.csv'):
     fechas.append(files[-12:-8] + files[-8:-6] + files[-6:-4])
 
 print(fechas)
@@ -54,7 +54,7 @@ a = a.reset_index()
 print(a['Date'])
 
 # Obtenemos los tickers y los pesos.
-data = pd.read_csv(cedir + '/brunopimentel/Documents/GitHub/MyST/files//NAFTRAC_20180131.csv', skiprows=2)
+data = pd.read_csv(cedir + '/MyST/files//NAFTRAC_20180131.csv', skiprows=2)
 
 ticker  = list(data.T.iloc[0])
 ticker = pd.DataFrame(ticker)
@@ -72,22 +72,31 @@ weight  = data.T.iloc[3]
 print(len(a['Date']))
 
 # Descargamos precios 
-k = 0
-price = []
-
-while k <= len(a['Date']):
-    start = a['Date'][k]
-    data_prices = yf.download(tickers=ticker2, start=start, end=start + timedelta(days=1), progress=False)
-    price.append(data_prices)
-    k = k+1
-
-price = price.iloc[:, 0:35]
+start = a['Date'][0]
+data_prices = yf.download(tickers=ticker2, start=start, end=a['Date'].iloc[-1], progress=False)
+price = data_prices['Close']
 print(price)
 
-datos_fi  = pd.DataFrame()
-datos_fi = price
+# 
 
-print(datos_fi)
+lista = pd.DataFrame()
+
+capital  = capital - (capital * comision)
+lista['tikckers'] = ticker2
+lista['pesos'] = weight/100
+lista['cap_x_ticker'] = capital * lista['pesos']
+lista['titulos'] = lista['cap_x_ticker'] / 
+
+print(datos_fi[0:10])
+
+print(lista)
+
+x = sum(lista['titulos'])
+print(x)
+
+titulos * precio * comision  = capital 
+
+precio capital / comision /
 
 
 
@@ -99,8 +108,6 @@ print(datos_fi)
 
 
 
-for k in range len(a['Date']):
-    data_prices = yf.download(tickers=ticker2, start=a['Date'][i], end='2019-12-31', progress=False)
 
 
 
@@ -110,3 +117,21 @@ start = a['Date'][0]
 
 data_prices = yf.download(tickers=ticker2, start=start, end=start + timedelta(days=1), progress=False)
 
+m = 0
+
+for m in range(40):
+    data_prices = yf.download(tickers=ticker2, start=a['Date'][i], end='2019-12-31', progress=False)
+
+fu = pd.DataFrame()
+
+dati2 = pd.DataFrame()
+k = 0
+while k <= len(a['Date']):
+    dati = yf.download(tickers=ticker2[k], start=start, end = start + timedelta(days=1), progress=False)
+    #dati2 = dati['Adj Close']
+    k = k+1
+
+dati = yf.download(tickers=ticker2[k], start=start, end = start + timedelta(days=1), progress=False)
+dati2 = dati['Adj Close']
+print(dati)
+print(dati2)
