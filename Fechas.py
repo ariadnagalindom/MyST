@@ -1,9 +1,11 @@
 # Descargarmos librerias 
+from numpy.lib.arraysetops import isin
 from numpy.lib.function_base import append
 from numpy.testing._private.utils import print_assert_equal
 import pandas as pd
 import numpy as np
 from pandas.core.frame import DataFrame
+from pandas.core.indexes.period import period_range
 import yfinance as yf
 from datetime import date, datetime
 from os import cpu_count, path
@@ -90,15 +92,110 @@ lista['cap_x_ticker'] = capital * lista['pesos']
 lista['Precios_ini'] = precios_ini
 lista['titulos'] = lista['cap_x_ticker'] / lista['Precios_ini']
 
+
+
+
+
+
+
+
+
+
+print(lista)
+x = []
+for dates in (a['Date']):
+    xa = price.loc[dates]
+    xa.append(xa)
+
+
+price['fechas'] = price.index
+print(price)
+print(price['fechas'].iloc[1])
+
+
+
+
+lista['precio'] = 0
+
+for i in range(38):
+    if price['fechas'].iloc[i] == a['Date'][i]:
+        lista['precio' + i].iloc[i] = price.iloc[i,i:]
+print(lista)
+
+
+
+for i in range(37):
+    if price['fechas'].iloc[i] == a['Date'][i]:
+        lista.append[price.iloc[i,i:]]
+print(lista)
+
+print(price['fechas'].iloc[0])
+print(a['Date'][0])
+print(price.iloc[0,0:])
+
+
+
+x = []
+for dates in (a['Date']):
+    xa['price'] = price.loc[dates]
+    xa.append(xa)
+
+
+
+
+
+
+
+
+
+
+xa['MEGACPO.MX']
+
+
+price.get('Date')
+
+price.to_frame()
+price['Date'] = a['Date']
 print(price['Date'])
 
-for dates in (a['Date']):
-    price.loc[dates]
-    #lista['Precios_'+ i] = 
+final = pd.DataFrame()
+final['Fecha'] = a['Date']
+
+print(list(price['Date']))
+
+m = 0
+while m <= 40:
+    if (price['Date']) in list(a['Date']):
+        final['Capital'] = price.iloc[i]
+        m = m+1
+
+print(final['Capital'])
+
+print(price.iloc[0])
+
+
+
+
+
+
+
+x = price.sum(price)
+
+ps = pd.DataFrame()
+ps = price
+print(price)
+print(a['Date'])
+
 
 
 final = pd.DataFrame()
 final['Fecha'] = a['Date']
+
+for price.index in a['Date']:
+    final['capital'] = lista['titulos'] * price[i]
+    print(final)
+
+
 
 
 
