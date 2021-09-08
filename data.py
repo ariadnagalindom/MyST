@@ -3,13 +3,7 @@ import os
 import sys 
 import glob
 import pandas_datareader.data as web
-
-
-def get_adj_closes(tickers, start_date=None, end_date=None):
-    closes = web.DataReader(name=tickers, data_source='yahoo', start=start_date, end=end_date)
-    closes = closes['Adj Close']
-    closes.sort_index(inplace=True)
-    return closes
+from functions import get_adj_closes
 
 
 cedir = os.path.dirname(os.path.abspath(sys.argv[0]))
@@ -24,11 +18,13 @@ rf = 0.0429
 fechas = []
 
 # Conseguimos los nombres de los archivos 
-for files in glob.glob(cedir + '/MyST/files/*.csv'):
+#for files in glob.glob(cedir + '/MyST/files/*.csv'): #iOs
+for files in glob.glob(cedir + '\\MyST\\files\\*.csv'): #Windows
     fechas.append(files[-12:-8] + files[-8:-6] + files[-6:-4])
 
 # Conseguimos los directorios completos de los archivos a leer 
-dates = [cedir + '/MyST/files/NAFTRAC_' + fechas[i] + '.csv' for i in range(0, len(fechas))]
+#dates = [cedir + '/MyST/files/NAFTRAC_' + fechas[i] + '.csv' for i in range(0, len(fechas))] #iOs
+dates = [cedir + '\\MyST\\files\\NAFTRAC_' + fechas[i] + '.csv' for i in range(0, len(fechas))] #Windows
 
 # Leemos todos los archivos 
 dataframes = [pd.read_csv(i, skiprows=2) for i in dates]
@@ -50,31 +46,25 @@ while i <= len(tickers)-1:
         tickers[i] = 'LIVEPOLC-1.MX'
         i = i+1
 
-    elif tickers[i] == 'MEXCHEM.MX':
-        tickers[i] == 'ORBIA.MX'
+    elif tickers[i] =='MEXCHEM.MX':
+        tickers[i] = 'ORBIA.MX'
         i = i+1
 
     elif tickers[i] == 'GFREGIOO.MX':
-        tickers[i] == 'RA.MX'
+        tickers[i] = 'RA.MX'
         i = i+1
 
     else:
         tickers[i] = tickers[i]
         i = i+1
 
-tickers[14] = "ORBIA.MX"
+
+
+print(tickers)
 
 # Sacamos lo que designamos como cash 
 tickers.remove("MXN.MX")
 tickers.remove("KOFL.MX")
-
-
-# Definimos la función para sacar precios 
-def get_adj_closes(tickers, start_date=None, end_date=None):
-    closes = web.DataReader(name=tickers, data_source='yahoo', start=start_date, end=end_date)
-    closes = closes['Adj Close']
-    closes.sort_index(inplace=True)
-    return closes
 
 # Obtenemos precios mensuales
 precios_mensuales = pd.DataFrame(get_adj_closes(tickers=tickers, start_date="2018-01-01", end_date="2021-01-31"))

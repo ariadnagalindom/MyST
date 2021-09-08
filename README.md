@@ -19,3 +19,7 @@ txt)
 MÁS SOBRE EL PROYECTO: 
 Dentro de la materia de Microestructuras y Sistemas de Traiding para Otoño 2021 se crea simula una inversión de un millón de pesos 
 con dos estrategias diferentes; activa y pasiva. 
+
+SECUENCIA PARA CORRER SCRIPTS:
+functions>data>main
+al final correr el notebook 
