@@ -73,7 +73,7 @@ print(len(a['Date']))
 
 # Descargamos precios 
 start = a['Date'][0]
-data_prices = yf.download(tickers=ticker2, start=start, end=a['Date'].iloc[-1], progress=False)
+data_prices = yf.download(tickers=ticker2, start=start, end=a['Date'].iloc[-1], progress=False, interval='1d')
 price = data_prices['Close']
 print(price)
 
@@ -90,6 +90,12 @@ lista['cap_x_ticker'] = capital * lista['pesos']
 lista['Precios_ini'] = precios_ini
 lista['titulos'] = lista['cap_x_ticker'] / lista['Precios_ini']
 
+print(price['Date'])
+
+for dates in (a['Date']):
+    price.loc[dates]
+    #lista['Precios_'+ i] = 
+
 
 final = pd.DataFrame()
 final['Fecha'] = a['Date']
@@ -100,6 +106,8 @@ final['capital'] = sum(lista['titulos'] * lista['Precios_ini'])
 
 print(sum(lista['titulos'] * lista['Precios_ini']))
 
+print(ticker2)
+print(a['Date'])
 
 
 
