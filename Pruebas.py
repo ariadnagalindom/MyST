@@ -43,3 +43,4 @@ v_port_pas = [sum(precios_mensuales.iloc[i, :] * cant_titulos) for i in range(1,
 # Insertamos el valor del portafolio incial
 v_port_pas.insert(0, v_port_ini)
 
+
