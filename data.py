@@ -1,4 +1,5 @@
 import pandas as pd 
+import matplotlib.pyplot as plt
 import os 
 import sys 
 import glob
@@ -37,7 +38,7 @@ tickers = dataframes[0]["Ticker"].reset_index(drop = True)
 tickers = [tickers[i] + ".MX" for i in range(0, len(tickers))]
 # Eliminamos los * de los tickers
 tickers = [tickers[i].replace("*", "") for i in range(0, len(tickers))]
-print(tickers)
+#print(tickers)
 
 # Cambiamos los tickers erroneos
 i = 0
@@ -60,7 +61,7 @@ while i <= len(tickers)-1:
 
 
 
-print(tickers)
+#print(tickers)
 
 # Sacamos lo que designamos como cash 
 tickers.remove("MXN.MX")
@@ -72,6 +73,10 @@ precios_mensuales = pd.DataFrame(get_adj_closes(tickers=tickers, start_date="201
 # Agrupamos los precios por mes 
 precios_mensuales = precios_mensuales.groupby(pd.Grouper(freq="M")).last()
 
+precios_ipc = pd.DataFrame(get_adj_closes(tickers=["^MXX"], start_date="2018-01-01", end_date="2021-01-31"))
+precios_ipc = precios_ipc.groupby(pd.Grouper(freq="M")).last()
+
+## inversión ACTIVA
 # Obtenemos precios diarios 
 precios_diarios = pd.DataFrame(get_adj_closes(tickers = tickers, start_date="2018-01-31", end_date="2021-01-31"))
 

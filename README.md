@@ -23,3 +23,7 @@ con dos estrategias diferentes; activa y pasiva.
 SECUENCIA PARA CORRER SCRIPTS:
 functions>data>main
 al final correr el notebook 
+
+WARNING:
+Prestar especial atención en correr las celdas según el sistema donde se este usando, hay líneas para correr iOs y Windows, sin 
+embargo, si se corre la equivocada generará error ya que no podrá descargar correctamente los datos. 
