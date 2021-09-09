@@ -1,5 +1,6 @@
 #importamos librerias 
 import pandas_datareader.data as web
+from statistics import stdev as de
 
 #función para descargar precios ajustados 
 def get_adj_closes(tickers, start_date=None, end_date=None):
@@ -7,3 +8,7 @@ def get_adj_closes(tickers, start_date=None, end_date=None):
     closes = closes['Adj Close']
     closes.sort_index(inplace=True)
     return closes
+
+def sharpe(lista, rf):
+    sharpe_ = (sum(lista) / len(lista) - (rf / 12)) / de(lista)
+    return sharpe_

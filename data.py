@@ -7,8 +7,8 @@ import pandas_datareader.data as web
 from functions import get_adj_closes
 
 
-cedir = os.path.dirname(os.path.abspath(sys.argv[0]))
-print(cedir)
+#cedir = os.path.dirname(os.path.abspath(sys.argv[0]))
+#print(cedir)
 
 # Definir capital, comision y tasa libre de riesgo.
 capital = 1000000
@@ -20,20 +20,20 @@ fechas = []
 
 # Conseguimos los nombres de los archivos 
 #for files in glob.glob(cedir + '/MyST/files/*.csv'): #iOs
-for files in glob.glob(cedir + '\\MyST\\files\\*.csv'): #Windows
+for files in glob.glob( 'C:\\Users\\ariad\\OneDrive\\Documentos\\GitHub\\MyST\\files\\*.csv'): #Windows
     fechas.append(files[-12:-8] + files[-8:-6] + files[-6:-4])
 
 # Conseguimos los directorios completos de los archivos a leer 
 #dates = [cedir + '/MyST/files/NAFTRAC_' + fechas[i] + '.csv' for i in range(0, len(fechas))] #iOs
-dates = [cedir + '\\MyST\\files\\NAFTRAC_' + fechas[i] + '.csv' for i in range(0, len(fechas))] #Windows
+dates = [ 'C:\\Users\\ariad\\OneDrive\\Documentos\\GitHub\\MyST\\files\\NAFTRAC_' + fechas[i] + '.csv' for i in range(0, len(fechas))] #Windows
 
 # Leemos todos los archivos 
 dataframes = [pd.read_csv(i, skiprows=2) for i in dates]
 # Eliminamos NaN
 dataframes = [dataframes[i].dropna().replace(',', '', regex=True) for i in range(0, len(dataframes))]
-
+#print(dataframes)
 # Sacamos los tickers 
-tickers = dataframes[0]["Ticker"].reset_index(drop = True)
+tickers = dataframes[0].loc[:,"Ticker"].reset_index(drop = True)
 # Agregamos el .MX a los tickers
 tickers = [tickers[i] + ".MX" for i in range(0, len(tickers))]
 # Eliminamos los * de los tickers
