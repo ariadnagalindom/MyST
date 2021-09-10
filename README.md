@@ -27,3 +27,11 @@ al final correr el notebook
 WARNING:
 Prestar especial atención en correr las celdas según el sistema donde se este usando, hay líneas para correr iOs y Windows, sin 
 embargo, si se corre la equivocada generará error ya que no podrá descargar correctamente los datos. 
+
+
+ACTIVAR AMBIENTE VIRTUAL:
+colocar la siguiente linea en una terminal Promt segun el sistema utilizado
+Windows:
+venv\Scripts\activate 
+iOS:
+venv/Scripts/activate
